@@ -12,7 +12,6 @@ logFile = open(logFileName, 'a')
 logFile.write('process started at ' + str(timeNowIs) + '\n')
 
 dir = os.listdir(SOURCE_PATH)
-dir.remove('.DS_Store')
 
 txtFiles = fnmatch.filter(os.listdir(SOURCE_PATH), '*.txt')
 zipFiles = fnmatch.filter(os.listdir(SOURCE_PATH), '*.txt.zip')
