@@ -14,12 +14,14 @@ logFile.write('process started at ' + str(timeNowIs) + '\n')
 dir = os.listdir(SOURCE_PATH)
 
 txtFiles = fnmatch.filter(os.listdir(SOURCE_PATH), '*.txt')
-zipFiles = fnmatch.filter(os.listdir(SOURCE_PATH), '*.txt.zip')
+txtzipFiles = fnmatch.filter(os.listdir(SOURCE_PATH), '*.txt.zip')
+xmlzipFiles = fnmatch.filter(os.listdir(SOURCE_PATH), '*.xml.zip')
 
-logFile.write('txtFiles: ' + str(txtFiles) + '\n')
-logFile.write('zipFiles: ' + str(zipFiles) + '\n')
+logFile.write('txt Files: ' + str(txtFiles) + '\n')
+logFile.write('txt.zip Files: ' + str(txtzipFiles) + '\n')
+logFile.write('xml.zip Files: ' + str(xmlzipFiles) + '\n')
 
-totalFiles = txtFiles + zipFiles
+totalFiles = txtFiles + txtzipFiles + xmlzipFiles
 
 for file in totalFiles:
   filebase = file.split('.')[0]
