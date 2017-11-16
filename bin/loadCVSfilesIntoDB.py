@@ -91,6 +91,15 @@ for file in zipfiles:
   os.rename(fullFile, PROCESSED_PATH + '/' + file)
   os.rename(unzippedFile, PROCESSED_PATH + '/' + file.split('.zip')[0])
 
+try:
+  now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+  statement = 'INSERT INTO ultimocomputo (PROGRESO, ACTUALIZADO) VALUES (%s, \"%s\")' % (voteProgress, now)
+  print statement
+  cursor.execute(statement)
+  db.commit()
+except mysql.connector.Error as err:
+  print("Something went wrong: {}".format(err))
+  db.rollback()
 
 cursor.close()
 db.close()

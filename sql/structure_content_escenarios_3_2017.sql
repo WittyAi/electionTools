@@ -7,7 +7,7 @@
 #
 # Host: elections.ct3lkgaxseul.sa-east-1.rds.amazonaws.com (MySQL 5.6.37-log)
 # Database: elections_dev
-# Generation Time: 2017-11-16 12:46:21 +0000
+# Generation Time: 2017-11-16 18:36:14 +0000
 # ************************************************************
 
 
@@ -2998,6 +2998,18 @@ VALUES
 
 /*!40000 ALTER TABLE `subpactos` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table ultimocomputo
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ultimocomputo`;
+
+CREATE TABLE `ultimocomputo` (
+  `PROGRESO` text,
+  `ACTUALIZADO` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 
 # Dump of table votaciones_4
