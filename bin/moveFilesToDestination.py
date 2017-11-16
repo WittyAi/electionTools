@@ -29,12 +29,9 @@ totalFiles = txtFiles + txtzipFiles + xmlzipFiles
 
 for file in totalFiles:
   filebase = file.split('.')[0]
-#  print filebase
   origin = SOURCE_PATH + '/' + file
   destination = DESTINATION_PATH + '/' + file
   ackFile = SOURCE_PATH + '/' + filebase + '.ACK'
-#   print 'origin: ' + origin
-#   print 'destination: ' + destination
   os.rename(origin, destination)
   ackFile = open(ackFile, 'w')
   ackFile.close()
