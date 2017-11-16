@@ -25,7 +25,6 @@ zipfiles = fnmatch.filter(os.listdir(DESTINATION_PATH), '*.txt.zip')
 print datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
 def unzipCVSFile (fullFile):
-  os.chmod(fullFile, 0775)
   zip_ref = zipfile.ZipFile(fullFile, 'r' )
   zip_ref.extractall(DESTINATION_PATH)
   zip_ref.close()
