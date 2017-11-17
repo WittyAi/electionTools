@@ -4,6 +4,7 @@ import datetime
 import codecs
 import zipfile
 import mysql.connector
+import json
 
 from dotenv import load_dotenv
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -76,27 +77,22 @@ def getBlankVotes(db, percentage_id):
 
 
 percentage_id = getLatestUpdate(db)[0][0]
-print percentage_id
-
-candidates = getCandidatesForPresidentList(db)
+candidates    = getCandidatesForPresidentList(db)
 candidate_ids = map(lambda x: x[0], candidates)
-print candidate_ids
-
 candidate_results = {}
+
 for ID in candidate_ids:
   result = getTotalVoteCountForCandidate(db, ID, percentage_id)
   candidate_results[str(ID)] = result[0][0]
 
-print candidate_results
-
 validVotes = getValidVotes(db, percentage_id)
-nullVotes = getNullVotes(db, percentage_id)
+nullVotes  = getNullVotes(db, percentage_id)
 blankVotes = getBlankVotes(db, percentage_id)
 
 voteResult = []
 
 for candidate in candidates:
-  name = candidate[4].encode('utf-8')
+  name = candidate[4]
   candidate_id = str(candidate[0])
   cantVotos = str(candidate_results[candidate_id])
   entry = { 'nombre' : name, 'votos' : cantVotos }
@@ -106,8 +102,9 @@ result = {}
  
 result['candidatos'] = voteResult
 result['votos'] = { 'validos': str(validVotes[0][0]), 'nulos': str(nullVotes[0][0]), 'blancos' : str(blankVotes[0][0]), 'totales': str(blankVotes[0][0] + nullVotes[0][0] +  validVotes[0][0])} 
+result['actualizado'] = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
-print result
+print json.dumps(result)
 
 
 
