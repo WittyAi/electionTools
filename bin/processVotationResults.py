@@ -75,6 +75,18 @@ def getBlankVotes(db, percentage_id):
   except mysql.connector.Error as err:
     print("Something went wrong: {}".format(err))
 
+def insertParsedResult(db, parsedResult):
+  try:
+    statement = "INSERT INTO resultados(ACTUALIZADO, PARSEADO, COD_ELEC) VALUES (\'%s\', \'%s\', %d)" % (parsedResult['actualizado'], json.dumps(parsedResult), 4)
+    print statement
+    cursor = db.cursor()
+    cursor.execute(statement)
+    db.commit()
+  
+  except mysql.connector.Error as err:
+    print("Something went wrong: {}".format(err))
+    db.rollback()
+
 
 percentage_id = getLatestUpdate(db)[0][0]
 candidates    = getCandidatesForPresidentList(db)
@@ -95,7 +107,7 @@ for candidate in candidates:
   name = candidate[4]
   candidate_id = str(candidate[0])
   cantVotos = str(candidate_results[candidate_id])
-  entry = { 'nombre' : name, 'votos' : cantVotos }
+  entry = { 'id' : candidate_id, 'nombre' : name, 'votos' : cantVotos }
   voteResult.append(entry)
 
 result = {}
@@ -104,7 +116,11 @@ result['candidatos'] = voteResult
 result['votos'] = { 'validos': str(validVotes[0][0]), 'nulos': str(nullVotes[0][0]), 'blancos' : str(blankVotes[0][0]), 'totales': str(blankVotes[0][0] + nullVotes[0][0] +  validVotes[0][0])} 
 result['actualizado'] = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
-print json.dumps(result)
+print 'paso por aqui'
+insertParsedResult(db, result)
+
+
+
 
 
 
