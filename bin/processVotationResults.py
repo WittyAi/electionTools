@@ -37,7 +37,8 @@ def getCandidatesForPresidentList(db):
 
 def getTotalVoteCountForCandidate(db, candidate_id, percentage_id):
   try:
-    statement = 'select sum(votos) as votosTotales from votaciones_4 where COD_AMBITO=%s and AMBITO=4 and PORCENTAJE_TOTAL=%s' % (candidate_id, percentage_id)
+    statement = 'select VOTOS from votaciones_4 where COD_ELEC=4 and AMBITO=4 and COD_AMBITO=%s and COD_ELEC=4 and PORCENTAJE_TOTAL=%s and COD_ZONA=19001' % (candidate_id, percentage_id)
+    #statement = 'select sum(votos) as votosTotales from votaciones_4 where COD_AMBITO=%s and AMBITO=4 and PORCENTAJE_TOTAL=%s' % (candidate_id, percentage_id)
     cursor = db.cursor()
     cursor.execute(statement)
     return cursor.fetchall()
@@ -47,7 +48,7 @@ def getTotalVoteCountForCandidate(db, candidate_id, percentage_id):
 
 def getValidVotes(db, percentage_id):
   try:
-    statement = 'select sum(votos) as votosValidos from votaciones_4 where AMBITO=7 and COD_AMBITO=1 and PORCENTAJE_TOTAL=%s' % (percentage_id)
+    statement = 'select VOTOS as votosValidos from votaciones_4 where AMBITO=7 and COD_AMBITO=1 and PORCENTAJE_TOTAL=%s and COD_ZONA=19001' % (percentage_id)
     cursor = db.cursor()
     cursor.execute(statement)
     return cursor.fetchall()
@@ -57,7 +58,7 @@ def getValidVotes(db, percentage_id):
 
 def getNullVotes(db, percentage_id):
   try:
-    statement = 'select sum(votos) as votosValidos from votaciones_4 where AMBITO=5 and COD_AMBITO=1 and PORCENTAJE_TOTAL=%s' % (percentage_id)
+    statement = 'select VOTOS as votosValidos from votaciones_4 where AMBITO=5 and COD_AMBITO=1 and PORCENTAJE_TOTAL=%s and COD_ZONA=19001' % (percentage_id)
     cursor = db.cursor()
     cursor.execute(statement)
     return cursor.fetchall()
@@ -67,7 +68,7 @@ def getNullVotes(db, percentage_id):
     
 def getBlankVotes(db, percentage_id):
   try:
-    statement = 'select sum(votos) as votosValidos from votaciones_4 where AMBITO=6 and COD_AMBITO=1 and PORCENTAJE_TOTAL=%s' % (percentage_id)
+    statement = 'select VOTOS as votosValidos from votaciones_4 where AMBITO=6 and COD_AMBITO=1 and PORCENTAJE_TOTAL=%s and COD_ZONA=19001' % (percentage_id)
     cursor = db.cursor()
     cursor.execute(statement)
     return cursor.fetchall()
@@ -120,7 +121,7 @@ result['votos'] = { 'validos': str(validVotes[0][0]), 'nulos': str(nullVotes[0][
 result['actualizado'] = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
 print voteResult
-#insertParsedResult(db, result)
+insertParsedResult(db, result)
 
 
 

@@ -20,7 +20,7 @@ DESTINATION_PATH = os.environ.get('DESTINATION_PATH') if os.environ.get('DESTINA
 PROCESSED_PATH   = os.environ.get('PROCESSED_PATH')   if os.environ.get('PROCESSED_PATH')   else './processed'
 
 dir      = os.listdir(DESTINATION_PATH)
-zipfiles = fnmatch.filter(os.listdir(DESTINATION_PATH), '*.txt.zip')
+zipfiles = fnmatch.filter(os.listdir(DESTINATION_PATH), 'VOTACION_4*.txt.zip')
 
 print datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
